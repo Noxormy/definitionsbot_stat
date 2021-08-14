@@ -41,7 +41,7 @@ function Users({users}) {
     }, [0, 0, 0, 0, 0])
 
     const data = {
-        labels: ['1', '2', '3', '4', '5', '6'],
+        labels: new Array(5).fill(Date.now()).map((item, idx) => new Date(item - idx * DAY_SECONDS * 1000).getDate()).reverse(),
         datasets: [
             {
                 label: 'count of users for last 5 days',
