@@ -1,4 +1,6 @@
 {
   "count_of_users": "Users total",
-  "title": "Definition Bot Statistic"
+  "title": "Definition Bot Statistic",
+  "new_users": "New users",
+  "popular_words": "Popular Words"
 }
