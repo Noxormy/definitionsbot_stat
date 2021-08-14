@@ -1,0 +1,27 @@
+@import "../../variables"
+
+.count_of_users
+  position: relative
+  width: 200px
+  height: 200px
+  background-color: $first_color
+  border-radius: 5px
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+
+  h3
+    position: absolute
+    top: 0
+    left: 0
+    flex: 1
+
+  & > *
+    width: 100%
+
+  .content
+    display: flex
+    justify-content: center
+    align-items: center
+    font-size: 50px

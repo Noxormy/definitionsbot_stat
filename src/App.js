@@ -1,20 +1,19 @@
-import { FirebaseAppProvider } from 'reactfire';
-import {firebaseConfig} from "./helpers/configs";
+import './App.sass'
 import {
     BrowserRouter as Router,
     Switch,
     Route
 } from "react-router-dom"
+import {SuspenseWithPerf} from "reactfire";
 import Main from "./Pages/Main"
-import './App.sass'
+import Header from "./Components/Header";
 
 function App() {
     return (
         <div className="App">
-            <header>
-            </header>
-            <FirebaseAppProvider firebaseConfig={firebaseConfig}>
-                <div className="page">
+            <Header/>
+            <div className="page">
+                <SuspenseWithPerf fallback={<p>Loading...</p>} traceId="page">
                     <Router>
                         <Switch>
                             <Route exact path="/">
@@ -22,8 +21,8 @@ function App() {
                             </Route>
                         </Switch>
                     </Router>
-                </div>
-            </FirebaseAppProvider>
+                </SuspenseWithPerf>
+            </div>
         </div>
     )
 }

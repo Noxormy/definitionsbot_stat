@@ -1,12 +1,16 @@
+import './index.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { FirebaseAppProvider } from 'reactfire';
+import {firebaseConfig} from "./helpers/configs";
 import './i18next';
-import './index.css';
 import App from './App';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+      <FirebaseAppProvider firebaseConfig={firebaseConfig} suspense={true}>
+         <App/>
+      </FirebaseAppProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
