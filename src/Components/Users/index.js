@@ -31,7 +31,6 @@ function Users({users}) {
     const MAX_DAYS = 4
     let usersData = getForDays(users, MAX_DAYS)
     const countOfUserBefore = users.length - usersData.length
-    console.log(usersData.map(item => item.time))
 
     const dataForDays = new Array(MAX_DAYS + 1).fill(0).map((item, idx, array) => {
         if(idx === 0) item += countOfUserBefore
