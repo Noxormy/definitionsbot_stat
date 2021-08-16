@@ -26,19 +26,23 @@ const OPTIONS = {
 
 function Users({users}) {
     const { t } = useTranslation()
-    const now = parseInt((Date.now() / 1000).toFixed())
-    let usersData = users.filter(item => item.time > now - 5 * DAY_SECONDS)
+    const now = new Date()
+    const today = (new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime() / 1000).toFixed()
+    let usersData = users.filter(item => item.time > today - 5 * DAY_SECONDS)
+    const countOfUserBefore = users.length - usersData.length
     usersData = usersData.reduce((array, item) => {
-        if(item.time < now - 4 * DAY_SECONDS) return [...array.map((item, id) => id === 0 ? item + 1 : item)]
-        else if(item.time < now - 3 * DAY_SECONDS) return [...array.map((item, id) => id === 1 ? item + 1 : item)]
-        else if(item.time < now - 2 * DAY_SECONDS) return [...array.map((item, id) => id === 2 ? item + 1 : item)]
-        else if(item.time < now - DAY_SECONDS) return [...array.map((item, id) => id === 3 ? item + 1 : item)]
-        else if(item.time < now) return [...array.map((item, id) => id === 4 ? item + 1 : item)]
-        else {
-            console.error("wrong reduce")
-            return array
-        }
+        if(item.time < today - 4 * DAY_SECONDS) return array.map((item, id) => id === 0 ? item + 1 : item)
+        else if(item.time < today - 3 * DAY_SECONDS) return array.map((item, id) => id === 1 ? item + 1 : item)
+        else if(item.time < today - 2 * DAY_SECONDS) return array.map((item, id) => id === 2 ? item + 1 : item)
+        else if(item.time < today - DAY_SECONDS) return array.map((item, id) => id === 3 ? item + 1 : item)
+        else return array.map((item, id) => id === 4 ? item + 1 : item)
     }, [0, 0, 0, 0, 0])
+    usersData = usersData.map((item, idx, array) => {
+        if(idx === 0) item += countOfUserBefore;
+        else item += array[idx - 1]
+        return item
+    })
+
 
     const data = {
         labels: new Array(5).fill(Date.now()).map((item, idx) => new Date(item - idx * DAY_SECONDS * 1000).getDate()).reverse(),
