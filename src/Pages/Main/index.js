@@ -13,7 +13,7 @@ function Main() {
 
     const messagesRef = useFirestore().collection(MESSAGES)
     const messages = useFirestoreCollectionData(messagesRef).data
-    const usingCount = getForDays(messages, 0).length
+    const usingCount = getForDays(messages, 1).length
 
     return (
         <div className="page">

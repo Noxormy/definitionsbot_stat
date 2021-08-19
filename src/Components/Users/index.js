@@ -1,7 +1,8 @@
 import './index.sass'
 import { useTranslation } from 'react-i18next'
 import { Line } from 'react-chartjs-2'
-import {getForDays} from "../../helpers/collections";
+import {getForDays, getForOneDay} from "../../helpers/collections";
+import {color} from "chart.js/helpers";
 
 const DAY_SECONDS = 86400
 const OPTIONS = {
@@ -28,24 +29,24 @@ const OPTIONS = {
 function Users({users}) {
     const { t } = useTranslation()
 
-    const MAX_DAYS = 4
+    const MAX_DAYS = 5
     let usersData = getForDays(users, MAX_DAYS)
     const countOfUserBefore = users.length - usersData.length
 
-    const dataForDays = new Array(MAX_DAYS + 1).fill(0).map((item, idx, array) => {
-        if(idx === 0) item += countOfUserBefore
-        else item += array[idx - 1]
+    const dataForDays = []
+    for(let i = 0; i < MAX_DAYS; i++) {
+        let item = i === 0 ? countOfUserBefore : dataForDays[i - 1]
 
-        item += getForDays(usersData, MAX_DAYS - idx, idx).length
-        return item
-    })
+        item += getForOneDay(usersData, MAX_DAYS - i).length
+        dataForDays.push(item)
+    }
 
     const data = {
         labels: new Array(5).fill(Date.now()).map((item, idx) => new Date(item - idx * DAY_SECONDS * 1000).getDate()).reverse(),
         datasets: [
             {
                 label: t("new_users_label"),
-                data: dataForDays.reverse(),
+                data: dataForDays,
                 fill: false,
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgba(255, 99, 132, 0.2)',
